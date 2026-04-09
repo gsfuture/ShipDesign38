@@ -1,0 +1,17 @@
+name: PR Close Preview
+
+# 触发条件：PR关闭时
+on:
+  pull_request_target:
+    types: [closed]
+
+jobs:
+  pr-close:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 删除预览分支
+        uses: dev-drprasad/delete-tag-and-release@v0.1.2
+        with:
+          delete_branch: true
+          branch_name: pages/pr${{ github.event.number }}
+          github_token: ${{ secrets.PAT }}
